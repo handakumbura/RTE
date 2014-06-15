@@ -1,0 +1,6 @@
+Remote Terminal Executer
+
+this is an implimentation of the java awt class robot to work over tcp/ip. the purpose of the project is to remotely conntect to a linux machine and run terminal commands using an android client.
+
+RTEServer - the server project. 
+RTEClient - the android client project.
