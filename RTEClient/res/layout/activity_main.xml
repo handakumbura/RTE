@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.rteclient.MainActivity"
+    tools:ignore="MergeRootFrame" 
+    android:background="#000000"
+    >
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        android:paddingTop="40sp"
+        android:gravity="center_horizontal"
+        android:hint="enter IP of the server here"
+        android:textColor="#ffffff"
+        android:background="#000000">
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:text="Connect" 
+        android:paddingTop="10sp"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:onClick="connectToServer"/>
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" 
+        android:gravity="center_horizontal"
+        android:hint="enter terminal commands here"
+        android:textColor="#ffffff"
+        android:paddingTop="50sp"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:text="Send" 
+        android:paddingTop="10sp"
+        android:layout_gravity="center"
+        android:textColor="#ffffff"
+        android:onClick="sendCommands"
+       />
+
+</LinearLayout>
