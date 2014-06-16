@@ -24,7 +24,7 @@ public void start()
 		while(true)
 		{
 			socket = serverSocket.accept();
-			System.out.print("client connected");
+			
 			BufferedInputStream iStream = new BufferedInputStream(socket.getInputStream());
 			InputStreamReader reader = new InputStreamReader(iStream);
 			
