@@ -1,14 +1,22 @@
 package com.RTEServer;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.util.Calendar;
 
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+
 public class Server {
-private ServerSocket serverSocket;
+private SSLServerSocket serverSocket;
 private Socket socket;
 private int port;
 private StringBuffer clientMsg;
@@ -18,9 +26,35 @@ public void start()
 	port = 19999;
 	try
 	{
-		serverSocket = new ServerSocket(port);
-		clientMsg = new StringBuffer();
+		
+		//ssl
+		SecureRandom secureRandom = new SecureRandom();
+		secureRandom.nextInt();
+		
+		KeyStore publicKeyStore = KeyStore.getInstance("BKS");
+		publicKeyStore.load( new FileInputStream("client.public"), "client".toCharArray() );
+	
+		KeyStore privateKeyStore = KeyStore.getInstance("BKS");
+		privateKeyStore.load( new FileInputStream("server.private"),"server".toCharArray() );
+			
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+		trustManagerFactory.init(publicKeyStore);
+						
+		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+		keyManagerFactory.init(privateKeyStore, "server".toCharArray() );
+		
+		SSLContext sslContext = SSLContext.getInstance("TLS");
+		sslContext.init( keyManagerFactory.getKeyManagers(), trustManagerFactory.getTrustManagers(), secureRandom );
+		
+		SSLServerSocketFactory sslServSoceketFactory = sslContext.getServerSocketFactory();
+		
+		//creating ssl server socket
+		serverSocket = (SSLServerSocket) sslServSoceketFactory.createServerSocket(port);
+		serverSocket.setNeedClientAuth(true);
 		System.out.println("-- server started at \t\t :"+Calendar.getInstance().getTime());
+		
+		clientMsg = new StringBuffer();
+		
 		while(true)
 		{
 			socket = serverSocket.accept();
