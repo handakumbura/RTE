@@ -37,10 +37,10 @@ public void start()
 		KeyStore privateKeyStore = KeyStore.getInstance("BKS");
 		privateKeyStore.load( new FileInputStream("server.private"),"server".toCharArray() );
 			
-		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("SunX509");
+		TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance("PKIX");
 		trustManagerFactory.init(publicKeyStore);
 						
-		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+		KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("PKIX");
 		keyManagerFactory.init(privateKeyStore, "server".toCharArray() );
 		
 		SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -51,14 +51,15 @@ public void start()
 		//creating ssl server socket
 		serverSocket = (SSLServerSocket) sslServSoceketFactory.createServerSocket(port);
 		serverSocket.setNeedClientAuth(true);
-		System.out.println("-- server started at \t\t :"+Calendar.getInstance().getTime());
+		System.out.println(Calendar.getInstance().getTime()+"\t  : server started");
 		
-		clientMsg = new StringBuffer();
+		
 		
 		while(true)
 		{
 			socket = serverSocket.accept();
-			
+			clientMsg = new StringBuffer();
+			System.out.println(Calendar.getInstance().getTime()+"\t  : client connected");
 			BufferedInputStream iStream = new BufferedInputStream(socket.getInputStream());
 			InputStreamReader reader = new InputStreamReader(iStream);
 			
@@ -73,11 +74,13 @@ public void start()
 	        
 	        BufferedOutputStream oStream = new BufferedOutputStream(socket.getOutputStream());
         	OutputStreamWriter writter = new OutputStreamWriter(oStream);
-	        if(robot.initiate(msg))
+	              	
+        	if(robot.initiate(msg))
 	        {
-	        	System.out.println("-- client command executed at \t\t :"+Calendar.getInstance().getTime());        	
+        		System.out.println(Calendar.getInstance().getTime()+"\t  : client command executed");        	
 	        	writter.write("Successful"+(char) 16);
 	        	writter.flush();
+	        	
 	        }
 	        else
 	        {
