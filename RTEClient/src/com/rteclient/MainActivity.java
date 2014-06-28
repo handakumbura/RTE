@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
@@ -46,12 +47,13 @@ private KeyManagerFactory keyManagerFactory;
 private SSLContext sslContext;
 private SSLSocketFactory sslSocketFactory;
 private Button connButton;
+private Boolean keyAdded;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		
+		keyAdded=false;
 		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -106,12 +108,49 @@ private Button connButton;
 	
 	public void sendCommands(View view)
 	{
-		commandEditText = (EditText) findViewById(R.id.editText2);
-		commands = commandEditText.getText().toString()+ (char) 16;
+		if(!keyAdded)
+		{
+			commandEditText = (EditText) findViewById(R.id.editText2);
+			commands = commandEditText.getText().toString();
+		}
+		
+		commands += (char) 16;
 		hostEditText = (EditText) findViewById(R.id.editText1);
 		hostName = hostEditText.getText().toString();
+		Toast.makeText(this, commands, Toast.LENGTH_LONG).show();
 		new Thread(new ServerConnector()).start();		
 		
+	}
+	
+	public void enterKeyPress(View view)
+	{
+		getCommandText();
+		keyAdded=true;
+		commands += (char) 13;
+		Toast.makeText(this, "Enter key press added to command string", Toast.LENGTH_LONG).show();
+	}
+	
+	public void controlKeyPress(View view)
+	{
+		getCommandText();
+		commands += (char) 14;
+		Toast.makeText(this, "Ctrl key press added to command string", Toast.LENGTH_LONG).show();
+	}
+	
+	public void alterKeyPress(View view)
+	{
+		getCommandText();
+		commands += (char) 15;
+		keyAdded=true;
+		Toast.makeText(this, "Alt key press added to command string", Toast.LENGTH_LONG).show();
+	}
+	
+	
+	
+	public void getCommandText()
+	{
+			commandEditText = (EditText) findViewById(R.id.editText2);
+			commands = commandEditText.getText().toString();
 	}
 	
 	class ServerConnector implements Runnable

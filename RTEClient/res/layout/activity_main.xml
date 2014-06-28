@@ -6,8 +6,7 @@
     android:orientation="vertical"
     tools:context="com.rteclient.MainActivity"
     tools:ignore="MergeRootFrame" 
-    android:background="#000000"
-    >
+    android:background="#000000">
 
     <EditText
         android:id="@+id/editText1"
@@ -27,7 +26,7 @@
         android:id="@+id/button1"
         android:layout_width="100sp"
         android:layout_height="wrap_content"
-        android:text="Connect" 
+        android:text="Serve IP" 
         android:paddingTop="10sp"
         android:layout_gravity="center"
         android:textColor="#ffffff"
@@ -52,6 +51,71 @@
         android:layout_gravity="center"
         android:textColor="#ffffff"
         android:onClick="sendCommands"
+        android:layout_marginBottom="40sp"
        />
+
+    <!-- special command -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:background="#FE642E"
+        android:layout_margin="5sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":: Special Commands" 
+                android:textColor="#000000"/>
+				
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" 
+                android:background="#F5BCA9"
+                android:paddingTop="20sp">
+
+		     <Button
+		         android:id="@+id/enterBtn"
+		         style="?android:attr/buttonStyleSmall"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="Entr Key" 
+		         android:onClick="enterKeyPress"/>
+
+		     <Button
+		         android:id="@+id/ctrlBtn"
+		         style="?android:attr/buttonStyleSmall"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="Ctrl Key" 
+		         android:onClick="controlKeyPress"/>
+
+		     <Button
+		         android:id="@+id/altBtn"
+		         style="?android:attr/buttonStyleSmall"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="Alte Key" 
+		         android:onClick="alterKeyPress"/>
+
+		     <Button
+		         android:id="@+id/button3"
+		         style="?android:attr/buttonStyleSmall"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="Rtrn Src" 
+		         android:enabled="false"/>
+
+         </LinearLayout>
+           
+
+        </LinearLayout>
+		 
+    </FrameLayout>
 
 </LinearLayout>
